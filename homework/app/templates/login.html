@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    <p id="message"></p>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            fetch('/login/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',  // CSRF-токен для защиты
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(formData)  // Преобразуем данные формы в URL-encoded строку
+            })
+            .then(response => response.json())  // Парсим ответ в JSON
+            .then(data => {
+                if (data.message) {
+                    // Если есть сообщение об успехе, перенаправляем на страницу профиля
+                    window.location.href = '/profile/';
+                } else if (data.error) {
+                    // Если есть ошибка, показываем её пользователю
+                    document.getElementById('message').textContent = data.error;
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        });
+    </script>
+</body>
+</html>

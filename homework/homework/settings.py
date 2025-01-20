@@ -27,6 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = "app.CustomUser"
+
+
+# Настройки почты
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.yandex.ru"  # SMTP-сервер Yandex
+EMAIL_PORT = 465  # Порт для SSL
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True  # Использовать SSL (обязательно для Yandex)
+EMAIL_HOST_USER = "nikostdjango@yandex.ru"
+EMAIL_HOST_PASSWORD = "wryzushmhhdmvkon"
+DEFAULT_FROM_EMAIL = "nikostdjango@yandex.ru"  # Отправитель по умолчанию
+
 
 # Application definition
 
