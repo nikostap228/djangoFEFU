@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-
+from django.shortcuts import redirect
 
 
 def get_view(request):
@@ -25,3 +25,12 @@ def post_view(request):
             return JsonResponse({"error": "Name and age are required."}, status=400)
     else:
         return JsonResponse({"error": "Only POST method is allowed."}, status=405)
+
+
+def unified_view(request):
+    if request.method == "GET":
+        return JsonResponse({"message": "GET request"})
+    elif request.method == "POST":
+        return redirect(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlrIHJvbGw%3D"
+        )  # Редирект на внешний URL
