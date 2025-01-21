@@ -14,19 +14,16 @@ from django.contrib.auth.decorators import login_required
 User = get_user_model()
 
 
-@csrf_exempt
 def get_view(request):
     if request.method == "GET":
         return JsonResponse({"message": "This is a GET request"})
 
 
-@csrf_exempt
 def get_view2(request):
     if request.method == "GET":
         return JsonResponse({"message": "This is a get request 2"})
 
 
-@csrf_exempt
 def post_view(request):
     if request.method == "POST":
         # Получаем данные из POST-запроса
