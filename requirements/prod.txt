@@ -7,3 +7,4 @@ dump-env
 python-dotenv
 sorl-thumbnail
 djangorestframework
+django-extensions
