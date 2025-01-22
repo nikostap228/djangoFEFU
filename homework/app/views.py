@@ -48,7 +48,6 @@ def unified_view(request):
         )  # Редирект на внешний URL
 
 
-@csrf_exempt
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -72,7 +71,6 @@ def register(request):
         return JsonResponse({"error": "Only GET or POST methods are allowed"}, status=405)
 
 
-@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
