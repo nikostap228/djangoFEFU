@@ -19,16 +19,34 @@
     </form>
     <p id="message"></p>
     <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrfToken = getCookie('csrftoken');  // Получаем CSRF-токен из cookies
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
             fetch('/login/', {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',  // CSRF-токен для защиты
+                    'X-CSRFToken': csrfToken,  // Передаем CSRF-токен
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: new URLSearchParams(formData)  // Преобразуем данные формы в URL-encoded строку
+                body: new URLSearchParams(formData),  // Преобразуем данные формы в URL-encoded строку
+                credentials: 'include'  // Включаем передачу cookies
             })
             .then(response => response.json())  // Парсим ответ в JSON
             .then(data => {
