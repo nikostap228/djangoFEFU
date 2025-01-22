@@ -39,7 +39,6 @@ def post_view(request):
         return JsonResponse({"error": "Only POST method is allowed."}, status=405)
 
 
-@csrf_exempt
 def unified_view(request):
     if request.method == "GET":
         return JsonResponse({"message": "GET request"})
@@ -49,7 +48,6 @@ def unified_view(request):
         )  # Редирект на внешний URL
 
 
-@csrf_exempt
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -72,8 +70,6 @@ def register(request):
     else:
         return JsonResponse({"error": "Only GET or POST methods are allowed"}, status=405)
 
-
-@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -92,13 +88,11 @@ def user_login(request):
         return JsonResponse({"error": "Only GET or POST methods are allowed"}, status=405)
 
 
-@csrf_exempt
 def user_logout(request):
     logout(request)
     return JsonResponse({"message": "Logged out"})
 
 
-@csrf_exempt
 @require_http_methods(["GET", "POST", "PUT", "DELETE"])
 def user_crud(request, pk=None):
     if request.method == "GET":
@@ -175,7 +169,6 @@ def reset_password_confirm(request, uidb64, token):
         return JsonResponse({"error": "User not found"}, status=404)
 
 
-@csrf_exempt
 def delete_account(request):
     if request.method == "POST":
         user = request.user
@@ -188,7 +181,6 @@ def delete_account(request):
     return JsonResponse({"error": "Only GET or POST methods are allowed"}, status=405)
 
 
-@csrf_exempt
 def edit_profile(request):
     if request.method == "POST":
         user = request.user
