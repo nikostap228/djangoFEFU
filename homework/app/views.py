@@ -134,6 +134,7 @@ def user_crud(request, pk=None):
             return JsonResponse({"error": "User not found"}, status=404)
 
 
+@csrf_exempt
 def reset_password_request(request):
     if request.method == "POST":
         email = request.POST.get("email")
