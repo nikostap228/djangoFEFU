@@ -23,10 +23,11 @@
             fetch('/edit-profile/', {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-CSRFToken': csrfToken,  // Используем CSRF-токен из cookies
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: new URLSearchParams(new FormData(e.target))
+                body: new URLSearchParams(new FormData(e.target)),
+                credentials: 'include'  // Включаем передачу cookies
             })
             .then(response => response.json())
             .then(data => {
