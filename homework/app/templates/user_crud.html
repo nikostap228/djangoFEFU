@@ -11,7 +11,7 @@
     <!-- Форма для создания пользователя -->
     <h2>Create User</h2>
     <form id="createUserForm">
-        {% csrf_token %}
+        <form method="post">{% csrf_token %}
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         <br>
@@ -28,7 +28,7 @@
     <!-- Форма для обновления пользователя -->
     <h2>Update User</h2>
     <form id="updateUserForm">
-        {% csrf_token %}
+        <form method="post">{% csrf_token %}
         <label for="userId">User ID:</label>
         <input type="number" id="userId" name="userId" required>
         <br>
@@ -45,7 +45,7 @@
     <!-- Форма для удаления пользователя -->
     <h2>Delete User</h2>
     <form id="deleteUserForm">
-        {% csrf_token %}
+        <form method="post">{% csrf_token %}
         <label for="deleteUserId">User ID:</label>
         <input type="number" id="deleteUserId" name="userId" required>
         <br>
