@@ -134,7 +134,6 @@ def user_crud(request, pk=None):
             return JsonResponse({"error": "User not found"}, status=404)
 
 
-@csrf_exempt
 def reset_password_request(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -142,7 +141,6 @@ def reset_password_request(request):
         if user:
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
-            # Динамически генерируем URL для сброса пароля
             reset_url = request.build_absolute_uri(f"/reset-password/{uid}/{token}/")
             send_mail(
                 "Password Reset",
@@ -151,8 +149,9 @@ def reset_password_request(request):
                 [email],
                 fail_silently=False,
             )
-            return render(request, "password_reset_done.html")
-        return JsonResponse({"error": "User not found"}, status=404)
+            return JsonResponse({"message": "Password reset email sent successfully."})
+        else:
+            return JsonResponse({"error": "User not found"}, status=404)
     return render(request, "reset_password_request.html")
 
 
