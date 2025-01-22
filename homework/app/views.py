@@ -71,6 +71,7 @@ def register(request):
         return JsonResponse({"error": "Only GET or POST methods are allowed"}, status=405)
 
 
+@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -140,7 +141,8 @@ def reset_password_request(request):
         if user:
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
-            reset_url = f"http://127.0.0.1:8000/reset-password/{uid}/{token}/"
+            # Динамически генерируем URL для сброса пароля
+            reset_url = request.build_absolute_uri(f"/reset-password/{uid}/{token}/")
             send_mail(
                 "Password Reset",
                 f"Click the link to reset your password: {reset_url}",
